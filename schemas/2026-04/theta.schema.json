@@ -1,0 +1,451 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ThetaManifest",
+  "description": "The full `theta.toml` manifest.\n\nConstruct via deserialization (`toml::from_str`) followed by `Validate::validate`, or via `minimal_manifest()` for test fixtures. Direct struct-literal construction bypasses validation — callers are responsible for ensuring invariants.",
+  "type": "object",
+  "required": [
+    "agent",
+    "theta"
+  ],
+  "properties": {
+    "agent": {
+      "$ref": "#/definitions/Agent"
+    },
+    "extras": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "harness": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "instructions": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Instructions"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "skills": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": {
+        "$ref": "#/definitions/Skill"
+      }
+    },
+    "subagents": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/Subagent"
+      }
+    },
+    "theta": {
+      "$ref": "#/definitions/Theta"
+    },
+    "tools": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": {
+        "$ref": "#/definitions/Tool"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Agent": {
+      "type": "object",
+      "required": [
+        "description",
+        "name"
+      ],
+      "properties": {
+        "authors": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "tags": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ApplyMode": {
+      "type": "string",
+      "enum": [
+        "always",
+        "model-decision",
+        "glob",
+        "manual"
+      ]
+    },
+    "Instructions": {
+      "type": "object",
+      "properties": {
+        "rules": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/Rule"
+          }
+        },
+        "system": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "LocalOrGitRef": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "file",
+            "git"
+          ],
+          "properties": {
+            "branch": {
+              "description": "Explicit branch name",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "file": {
+              "type": "string"
+            },
+            "git": {
+              "type": "string"
+            },
+            "rev": {
+              "description": "Explicit commit SHA",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "tag": {
+              "description": "Explicit tag name",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "system"
+          ],
+          "properties": {
+            "system": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "Rule": {
+      "type": "object",
+      "required": [
+        "src"
+      ],
+      "properties": {
+        "apply": {
+          "default": "always",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ApplyMode"
+            }
+          ]
+        },
+        "apply_to": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "src": {
+          "$ref": "#/definitions/LocalOrGitRef"
+        },
+        "summary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Skill": {
+      "type": "object",
+      "required": [
+        "source"
+      ],
+      "properties": {
+        "goal": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "$ref": "#/definitions/SourceRef"
+        },
+        "tags": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "SourceRef": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "git"
+          ],
+          "properties": {
+            "branch": {
+              "description": "Explicit branch name",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "git": {
+              "type": "string"
+            },
+            "rev": {
+              "description": "Explicit commit SHA",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "subdirectory": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "tag": {
+              "description": "Explicit tag name",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "path": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "system"
+          ],
+          "properties": {
+            "system": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "Subagent": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "prompt_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "skills": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "tools": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "Theta": {
+      "type": "object",
+      "required": [
+        "schema"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Tool": {
+      "type": "object",
+      "properties": {
+        "args": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "command": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "env": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "headers": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

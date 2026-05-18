@@ -1,0 +1,29 @@
+[claude_code]
+name = "Claude Code"
+url = "https://code.claude.com/"
+docs = "https://docs.anthropic.com/en/docs/claude-code"
+config_files = ["CLAUDE.md", ".claude/rules/*.md", ".claude/settings.json", ".mcp.json", ".claude/skills/*/SKILL.md", ".claude/agents/*.md"]
+last_verified = 2026-04-18
+
+[github_copilot]
+name = "GitHub Copilot"
+url = "https://code.visualstudio.com/docs/copilot/overview"
+docs = "https://docs.github.com/en/copilot/customizing-copilot"
+config_files = [".github/copilot-instructions.md", ".github/instructions/*.instructions.md", ".vscode/mcp.json", ".github/skills/*/SKILL.md", ".github/agents/*.agent.md", ".vscode/settings.json"]
+last_verified = 2026-04-18
+
+[cursor]
+name = "Cursor"
+url = "https://cursor.com/"
+docs = "https://docs.cursor.com/context/rules-for-ai"
+config_files = [".cursor/rules/system.md", ".cursor/rules/*.mdc", ".cursor/mcp.json", ".cursor/hooks.json", ".cursor/skills/*/SKILL.md", ".cursor/agents/*.md"]
+minimum_version = "3.0"
+last_verified = 2026-04-18
+
+[codex_cli]
+name = "Codex CLI"
+url = "https://github.com/openai/codex"
+docs = "https://github.com/openai/codex#readme"
+config_files = ["AGENTS.md", ".codex/config.toml", ".codex/agents/*.toml", ".agents/skills/*/SKILL.md", ".codex/skills/*/SKILL.md"]
+last_verified = 2026-04-18
+

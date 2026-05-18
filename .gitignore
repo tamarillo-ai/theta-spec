@@ -1,0 +1,11 @@
+# general
+research/
+scratch/
+
+# mkdocs build output and bkp files
+site/
+**/_bkp/
+
+# tmp helpers
+tmp_**/*
+.DS_Store
