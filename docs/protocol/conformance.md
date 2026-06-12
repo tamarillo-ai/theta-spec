@@ -15,7 +15,8 @@ Implementations **MAY** expose additional CLI verbs beyond the six protocol oper
 | Verb | Purpose |
 |---|---|
 | `theta init` | Scaffold a new `theta.toml` (and optionally seed from a registered system agent via `--from`) |
-| `theta schema` | Print the JSON Schema for the manifest |
+| `theta schema` | Print the JSON Schema for the manifest. `--list-verbs` emits the full verb tree; `--get` emits the JSON Schema for `theta get` output; `--constants` emits theta-static path constants for tooling use |
+| `theta get` | Emit the fully materialized project state as JSON (agent identity, lock hash, system prompt, rules with metadata, skills with frontmatter and supporting files, tools). Requires `theta sync` to have been run first |
 | `theta add <kind>` | Add a rule, system prompt, tool, skill, or subagent to the manifest |
 | `theta rm <kind> [--delete]` | Remove a manifest entry; `--delete` also deletes the source file or directory (supported for rule, system, skill, subagent) |
 | `theta list <kind>` | List manifest entries or system store contents |
@@ -36,6 +37,15 @@ The following global flags are accepted on every `theta` subcommand:
 | `--rules-dir <dir>` | Override the default `rules/` subdirectory (env: `THETA_RULES_DIR`) |
 
 Resolution order: CLI flag → environment variable → built-in default.
+
+### Environment variables
+
+| Variable | Purpose |
+|---|---|
+| `THETA_OUT_DIR` | When set, `theta sync` and `theta lock` write `.theta/` and `theta.lock` to this directory instead of next to `theta.toml`. Source files are still resolved relative to the manifest's directory. Enables materializing into a temporary directory without modifying the source tree. |
+| `THETA_DATA_DIR` | Override the theta data directory (system store, etc.). Defaults to `$XDG_DATA_HOME/theta`. |
+| `THETA_INSTRUCTIONS_DIR` | Override the instructions directory (see `--instructions-dir`). |
+| `THETA_RULES_DIR` | Override the rules subdirectory (see `--rules-dir`). |
 
 ## Validation
 

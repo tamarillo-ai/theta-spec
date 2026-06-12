@@ -7,6 +7,14 @@ Reads `theta.lock` and populates `.theta/` with all resolved resources. See the 
 !!! info "`theta` CLI"
     `theta sync` locks if stale, then materializes. `theta sync --force` re-locks unconditionally.
 
+    `THETA_OUT_DIR` redirects both `.theta/` and `theta.lock` to an alternate directory. Source files are still resolved relative to the manifest. Useful for materializing into a temporary directory without modifying the source tree:
+
+    ```bash
+    THETA_OUT_DIR=/tmp/output theta sync --manifest /real/project/theta.toml
+    ```
+
+    `theta get --output-format json` emits the complete materialized state as JSON after sync: agent identity, lock hash, system prompt, rules (with apply metadata), skills (with `SKILL.md` content and supporting files), and tools.
+
 ## `.theta/` structure
 
 | Path | Content |

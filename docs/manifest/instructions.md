@@ -113,6 +113,8 @@ Default directories are configurable via `theta-settings`:
 
 Resolution order: CLI flag > env var > built-in default.
 
+`THETA_OUT_DIR` redirects where `theta sync` writes `.theta/` and `theta.lock`. It does not affect where source files are read from. See [conformance](../protocol/conformance.md#environment-variables).
+
 These settings are also documented in the [protocol guide](../protocol/index.md).
 
 ## Casting

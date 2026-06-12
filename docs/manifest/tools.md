@@ -43,7 +43,7 @@ Tool names **MUST** match `^[a-z0-9]+(-[a-z0-9]+)*$`.
     ```toml
     [tools]
     filesystem = { command = ["npx", "-y", "@modelcontextprotocol/server-filesystem", "./"] }
-    fetch = { command = ["uvx", "mcp-fetch"] }
+    fetch = { command = ["uvx", "mcp-server-fetch"] }
     ```
 
 === "Expanded"

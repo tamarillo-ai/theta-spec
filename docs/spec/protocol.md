@@ -102,6 +102,7 @@ Reads `theta.lock` and populates `.theta/` with all resolved resources. The mate
 - `.theta/` is a derived artifact — **SHOULD** be gitignored
 - Materialization **SHOULD NOT** access the network. Implementations **MAY** re-fetch a commit already pinned in `theta.lock` if the local cache is missing, but **MUST NOT** resolve new refs during materialization
 - Orphan entries (locked resources that no longer exist in the manifest) **SHOULD** be removed
+- Implementations **MAY** support redirecting the materialization output directory (and `theta.lock`) to a path other than the manifest's directory, via an environment variable or equivalent mechanism. When redirected, source files **MUST** still be resolved relative to the manifest's directory.
 
 ### Post-materialization validation
 
